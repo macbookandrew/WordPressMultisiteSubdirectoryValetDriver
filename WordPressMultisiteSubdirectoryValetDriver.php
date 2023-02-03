@@ -18,8 +18,9 @@ class WordPressMultisiteSubdirectoryValetDriver extends BasicValetDriver
             (strpos( file_get_contents($sitePath . '/wp-config.php'), 'MULTISITE') !== false) &&
             (
                 //Double check if we are using subdomains.
-                strpos( file_get_contents($sitePath . '/wp-config.php'), "define('SUBDOMAIN_INSTALL',true)") ||
-                strpos( file_get_contents($sitePath . '/wp-config.php'), "define('SUBDOMAIN_INSTALL', true)")
+                strpos( file_get_contents($sitePath . '/wp-config.php'), "define('SUBDOMAIN_INSTALL',false)") ||
+                strpos( file_get_contents($sitePath . '/wp-config.php'), "define('SUBDOMAIN_INSTALL', false)") ||
+                strpos( file_get_contents($sitePath . '/wp-config.php'), "define( 'SUBDOMAIN_INSTALL', false )")
             );
     }
 
@@ -99,4 +100,3 @@ class WordPressMultisiteSubdirectoryValetDriver extends BasicValetDriver
         return $uri;
     }
 }
-
