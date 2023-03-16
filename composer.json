@@ -1,0 +1,18 @@
+{
+    "name": "andrewminion/wordpress-multisite-subdirectory-valet-driver",
+    "description": "A custom driver for Laravel Valet that adds compatibility for WordPress multisite installs that use the subdirectory configuration.",
+    "authors": [
+        {
+            "name": "Andrew Minion",
+            "homepage": "https://andrewrminion.com"
+        }
+    ],
+    "scripts": {
+        "post-install-cmd": [
+            "cp WordPressMultisiteSubdirectoryValetProvider.php ~/.config/valet/Drivers/"
+        ]
+    },
+    "require-dev": {
+        "laravel/valet": "^4.0"
+    }
+}
