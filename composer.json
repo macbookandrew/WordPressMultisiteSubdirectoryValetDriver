@@ -7,11 +7,6 @@
             "homepage": "https://andrewrminion.com"
         }
     ],
-    "scripts": {
-        "post-package-install": [
-            "cp WordPressMultisiteSubdirectoryValetProvider.php ~/.config/valet/Drivers/"
-        ]
-    },
     "require-dev": {
         "laravel/valet": "^4.0"
     }
