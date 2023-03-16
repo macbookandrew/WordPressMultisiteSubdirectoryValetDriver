@@ -1,17 +1,17 @@
 <?php
+
+namespace Valet\Drivers\Custom;
+
+use Valet\Drivers\BasicValetDriver;
+
 class WordPressMultisiteSubdirectoryValetDriver extends BasicValetDriver
 {
     public $wp_root = false; // "wp"
 
     /**
      * Determine if the driver serves the request.
-     *
-     * @param  string  $sitePath
-     * @param  string  $siteName
-     * @param  string  $uri
-     * @return bool
      */
-    public function serves($sitePath, $siteName, $uri)
+    public function serves(string $sitePath, string $siteName, string $uri): bool
     {
         // Look for MULTISITE in wp-config.php. It should be there for multisite installs.
         return file_exists($sitePath . '/wp-config.php') &&
@@ -26,13 +26,8 @@ class WordPressMultisiteSubdirectoryValetDriver extends BasicValetDriver
 
     /**
      * Get the fully resolved path to the application's front controller.
-     *
-     * @param  string  $sitePath
-     * @param  string  $siteName
-     * @param  string  $uri
-     * @return string
      */
-    public function frontControllerPath($sitePath, $siteName, $uri)
+    public function frontControllerPath(string $sitePath, string $siteName, string $uri): string
     {
         $_SERVER['PHP_SELF']    = $uri;
         $_SERVER['SERVER_ADDR'] = '127.0.0.1';
@@ -65,7 +60,10 @@ class WordPressMultisiteSubdirectoryValetDriver extends BasicValetDriver
         );
     }
 
-    public function isStaticFile($sitePath, $siteName, $uri)
+    /**
+     * Determine if the incoming request is for a static file.
+     */
+    public function isStaticFile(string $sitePath, string $siteName, string $uri)/*: string|false */
     {
     	// If the URI contains one of the main WordPress directories and it doesn't end with a slash,
     	// drop the subdirectory from the URI and check if the file exists. If it does, return the new uri.
@@ -88,11 +86,8 @@ class WordPressMultisiteSubdirectoryValetDriver extends BasicValetDriver
 
     /**
      * Redirect to uri with trailing slash.
-     *
-     * @param  string $uri
-     * @return string
      */
-    private function forceTrailingSlash($uri)
+    private function forceTrailingSlash(string $uri): string
     {
         if (substr($uri, -1 * strlen('/wp-admin')) == '/wp-admin') {
             header('Location: '.$uri.'/'); die;
