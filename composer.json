@@ -8,7 +8,7 @@
         }
     ],
     "scripts": {
-        "post-install-cmd": [
+        "post-package-install": [
             "cp WordPressMultisiteSubdirectoryValetProvider.php ~/.config/valet/Drivers/"
         ]
     },
