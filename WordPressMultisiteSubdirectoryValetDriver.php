@@ -13,14 +13,23 @@ class WordPressMultisiteSubdirectoryValetDriver extends BasicValetDriver
      */
     public function serves(string $sitePath, string $siteName, string $uri): bool
     {
+       // set wp-config.php path
+        $wpConfig = $sitePath . '/wp-config.php';
+
+        // if the usual path does not exist
+        // check the parent directory instead
+        if (!file_exists($wpConfig)) {
+            $wpConfig = dirname($sitePath) . '/wp-config.php';
+        }
+
         // Look for MULTISITE in wp-config.php. It should be there for multisite installs.
-        return file_exists($sitePath . '/wp-config.php') &&
-            (strpos( file_get_contents($sitePath . '/wp-config.php'), 'MULTISITE') !== false) &&
+        return file_exists($wpConfig) &&
+            (strpos( file_get_contents($wpConfig), 'MULTISITE') !== false) &&
             (
                 //Double check if we are using subdomains.
-                strpos( file_get_contents($sitePath . '/wp-config.php'), "define('SUBDOMAIN_INSTALL',false)") ||
-                strpos( file_get_contents($sitePath . '/wp-config.php'), "define('SUBDOMAIN_INSTALL', false)") ||
-                strpos( file_get_contents($sitePath . '/wp-config.php'), "define( 'SUBDOMAIN_INSTALL', false )")
+                strpos( file_get_contents($wpConfig), "define('SUBDOMAIN_INSTALL',false)") ||
+                strpos( file_get_contents($wpConfig), "define('SUBDOMAIN_INSTALL', false)") ||
+                strpos( file_get_contents($wpConfig), "define( 'SUBDOMAIN_INSTALL', false )")
             );
     }
 
